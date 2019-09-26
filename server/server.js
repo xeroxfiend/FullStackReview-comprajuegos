@@ -25,7 +25,7 @@ app.use(session({
 app.post('/auth/register', authCtrl.register)
 
 //login
-// app.post()
+app.post('/auth/login', authCtrl.login)
 
 //logout
 // app.delete()

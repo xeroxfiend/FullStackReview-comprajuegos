@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import "./hero.css";
 import axios from "axios";
 import swal from "sweetalert2";
+import {updateUser} from "../../ducks/reducer";
+import {connect} from "react-redux";
 
 class Hero extends Component {
   constructor() {
@@ -28,7 +30,8 @@ class Hero extends Component {
         email,
         password: password1
       });
-      console.log(res);
+      this.props.updateUser(res.data.user)
+      swal.fire({type: 'success', text: 'Registered'})
     } else {
       swal.fire({type: "error", text: `Passwords don't match`});
     }
@@ -72,4 +75,7 @@ class Hero extends Component {
   }
 }
 
-export default Hero;
+export default connect(
+  null,
+  {updateUser}
+)(Hero);

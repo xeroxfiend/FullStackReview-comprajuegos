@@ -18,14 +18,42 @@ module.exports = {
 
     //store the new user in the db
     const userId = await db.add_user({name, email});
-    db.add_hash({userId: userId[0].user_id, hash}).catch(err => res.sendStatus(503));
+    db.add_hash({userId: userId[0].user_id, hash}).catch(err =>
+      res.sendStatus(503)
+    );
 
     //store the new user in session
-    req.session.user = {email, name, userId: userId[0].user_id, isAdmin: false}
+    req.session.user = {email, name, userId: userId[0].user_id, isAdmin: false};
 
     //send the session user to the front en
-    res.status(201).send({message: 'Logged in', user: req.session.user, loggedIn: true})
-  }
+    res
+      .status(201)
+      .send({message: "Logged in", user: req.session.user, loggedIn: true});
+  },
 
-  // login: async ()
+  login: async (req, res) => {
+    const db = req.app.get("db");
+    const {email, password} = req.body;
+
+    //check if user exists
+    const user = await db.find_user(email);
+
+    //uf user doesn't exist, send appropriate response
+    if (!user[0]) return res.status(200).send({message: "Email not found"});
+
+    //hash password and compare
+    const result = bcrypt.compareSync(password, user[0].hash);
+
+    //if hashes don't match, send appropriate response
+    if (!result) return res.status(200).send({message: "Incorrect Password"});
+
+    //if they do match, add user to session
+    const {name, is_admin: isAdmin, user_id: userId} = user[0];
+    req.session.user = {name, email, isAdmin, userId};
+
+    //send session.user to front end
+    res
+      .status(200)
+      .send({message: "logged in", user: req.session.user, loggedIn: true});
+  }
 };
