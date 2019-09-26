@@ -11,8 +11,32 @@ app.use(express.json())
 app.use(session({
     resave: false,
     saveUninitialized: false,
-    secret: SESSION_SECRET
+    secret: SESSION_SECRET,
+    cookie: {
+        maxAge: 1000 * 60 * 60
+    }
 }))
+
+//enpoints
+
+//login
+// app.post()
+
+//logout
+// app.delete()
+
+//register
+// app.post()
+
+
+// app.get()
+
+// app.post()
+
+// app.post()
+
+// app.delete()
+
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
