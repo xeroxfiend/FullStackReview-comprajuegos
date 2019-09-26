@@ -2,7 +2,7 @@
     "name": "comprajuegos",
     "version": "0.1.0",
     "private": true,
-    "main": "/server/server.js",
+    "main": "server/server.js",
     "proxy": "http://localhost:5000",
     "dependencies": {
         "axios": "^0.19.0",
