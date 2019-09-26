@@ -31,6 +31,12 @@ class Header extends Component {
     Swal.fire(res.data.message);
   };
 
+  async logout() {
+    const res = await axios.delete('/auth/logout')
+    this.props.updateUser(null)
+    Swal.fire(res.data.message)
+  }
+
   render() {
     return (
       <div className="header">
@@ -41,7 +47,7 @@ class Header extends Component {
           </div>
         </Link>
         {this.props.user ? (
-          <button>Logout</button>
+          <button onClick={() => this.logout()}>Logout</button>
         ) : (
           <div className="login-form">
             <input

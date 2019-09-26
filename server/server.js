@@ -6,6 +6,7 @@ const session = require('express-session')
 const massive = require('massive')
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env
 const authCtrl = require('./controllers/authController')
+const gamesCtrl = require('./controllers/gamesController')
 
 
 app.use(express.json())
@@ -28,11 +29,11 @@ app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
 
 //logout
-// app.delete()
+app.delete('/auth/logout', authCtrl.logout)
 
 
 
-// app.get()
+app.get('/api/games', gamesCtrl.getGames)
 
 // app.post()
 
