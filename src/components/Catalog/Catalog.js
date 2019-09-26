@@ -13,7 +13,6 @@ class Catalog extends Component {
   render() {
       return(
           <div className="Catalog">
-              Catalog
               <Hero />
               <Game />
           </div>
