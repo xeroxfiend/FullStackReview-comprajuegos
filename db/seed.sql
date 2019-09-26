@@ -49,6 +49,10 @@ values ('The Witcher 3: Wild Hunt', 5999, 'https://images.igdb.com/igdb/image/up
 ​
 select * from games
 
+insert into users_comp (name, email, is_admin)
+values 
+('cool', 'wow', false);
+
 
 
 
